@@ -11,10 +11,11 @@
 ## 安装
 
 ```bash
-# 安装合集内全部 skills(全局,装到 ~/.claude/skills/ 等目录)
+# 全局安装,会自动检测你装了哪些 agent 并交互式让你勾选
+# (Claude Code → ~/.claude/skills/,Codex → ~/.codex/skills/ 等)
 npx skills add HOWILLMAKEIT/skills -g
 
-# 只安装某一个,指定 Claude Code,免交互
+# 免交互:只安装 undress,明确装给 Claude Code
 npx skills add HOWILLMAKEIT/skills -s undress -g -a claude-code -y
 
 # 纯 git 方式
