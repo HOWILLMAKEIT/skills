@@ -1,0 +1,34 @@
+{
+  "name": "@howillmakeit/skills-dsh",
+  "version": "0.1.0",
+  "description": "Opt-in DeepSeek Harness Skill-only bundle for HOWILLMAKEIT's agent skills (undress: 技术工作去包装).",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE.txt"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "agent-skill"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HOWILLMAKEIT/skills.git",
+    "directory": "integrations/deepseek-harness"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

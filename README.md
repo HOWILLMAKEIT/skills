@@ -25,6 +25,14 @@ cp -r skills/undress ~/.claude/skills/
 
 cc-switch 用户:在 skills 页添加仓库 `HOWILLMAKEIT/skills`,按需安装启用。
 
+### 方式 D:DeepSeek Harness(dsh)
+
+独立发布为 [dsh bundle](./integrations/deepseek-harness/)(复用 dsh 内置的 skill-filesystem provider,不含可执行插件代码):
+
+```bash
+dsh plugin --profile web add @howillmakeit/skills-dsh@0.1.0
+```
+
 ## 新增 skill
 
 顶层新建同名目录,写入带 `name` + `description` frontmatter 的 `SKILL.md`,并在上方表格加一行即可。更新已发布的 skill 用 `npx skills update <skill> -g`。
