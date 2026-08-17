@@ -1,0 +1,4 @@
+interface:
+  display_name: "Undress"
+  short_description: "拆解论文、项目和简历中的包装表达，说明真实改动、工程工作与证据强度"
+  default_prompt: "Use $undress to remove promotional language and explain what this work actually reused, changed, implemented, and demonstrated."
