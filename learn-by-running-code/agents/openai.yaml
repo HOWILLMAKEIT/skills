@@ -1,0 +1,4 @@
+interface:
+  display_name: "Learn by Running Code"
+  short_description: "把 Python 主题变成按章节组织、逐步增加概念且能独立运行的 uv 学习仓库"
+  default_prompt: "Use $learn-by-running-code to turn this Python topic into a progressive repository of concise, independently runnable chapters. Show me the curriculum outline and wait for confirmation before creating files."

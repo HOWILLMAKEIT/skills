@@ -1,0 +1,103 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Validate and build release artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.x
+          package-manager-cache: false
+
+      - name: Verify release version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: node scripts/check-release.mjs "$RELEASE_TAG"
+
+      - name: Validate Skill structure
+        run: node scripts/validate-skills.mjs
+
+      - name: Build npm tarball
+        env:
+          PACKAGE_OUTPUT: ${{ runner.temp }}/npm-package
+        run: |
+          mkdir -p "$PACKAGE_OUTPUT"
+          node integrations/deepseek-harness/scripts/pack.mjs
+          npm pack ./integrations/deepseek-harness --ignore-scripts \
+            --pack-destination "$PACKAGE_OUTPUT"
+
+      - name: Upload npm tarball
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package/*.tgz
+          if-no-files-found: error
+          retention-days: 1
+
+  publish-npm:
+    name: Publish DSH package to npm
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      id-token: write # Required by npm Trusted Publishing OIDC
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Download npm tarball
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm-package
+          path: package
+
+      - name: Require npm with Trusted Publishing support
+        run: |
+          npm --version
+          node -e "const v=require('node:child_process').execFileSync('npm',['--version'],{encoding:'utf8'}).trim().split('.').map(Number); if(v[0] < 11 || (v[0] === 11 && v[1] < 5)) { throw new Error('npm 11.5.1 or newer is required for Trusted Publishing') }"
+
+      - name: Publish npm package with OIDC
+        run: npm publish package/*.tgz --access public --ignore-scripts
+
+  github-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    permissions:
+      contents: write # Required to create the GitHub Release
+    steps:
+      - name: Download npm tarball
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm-package
+          path: package
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release create "$RELEASE_TAG" package/*.tgz --verify-tag --generate-notes --title "$RELEASE_TAG"

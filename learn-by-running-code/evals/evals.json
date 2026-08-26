@@ -1,0 +1,40 @@
+{
+  "skill_name": "learn-by-running-code",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我会写基础 Python，想通过运行代码系统学习 asyncio。帮我做成一个章节化仓库。",
+      "expected_output": "在信息不足且大纲未确认时，只补齐会改变课程结构的问题并给出待确认大纲，不创建仓库文件。",
+      "files": [],
+      "expectations": [
+        "输出明确课程目标、统一案例和逐章大纲",
+        "每章说明唯一新增概念、可观察结果和外部要求",
+        "在用户确认具体大纲前不创建学习仓库"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "使用 learn-by-running-code 创建一个 Python MCP 学习仓库。受众懂基础 Python；统一案例是本地笔记服务；已经确认 5 章：最小 FastMCP server、输入 Schema、Resources、Prompts、stdio 客户端联调。全部使用本地假数据、Python 3.12 和 uv。请在指定输出目录生成并验证。",
+      "expected_output": "生成五个连续编号、可独立运行的章节和完整 uv 项目，并如实报告实际运行结果。",
+      "files": [],
+      "expectations": [
+        "生成 README.md、pyproject.toml、uv.lock、.python-version 和 .gitignore",
+        "生成从 01_ 到 05_ 的连续章节且每章包含 main.py",
+        "README 为每章提供 uv run python 命令和预期现象",
+        "实际执行结构验证和无需凭据的章节，不把静态检查冒充运行通过"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "我想用一个可运行仓库学习 LangGraph，最终做出会调用模型的客服流程。请先设计大纲；我不希望刚开始就花 API 钱，也不能提交真实 key。",
+      "expected_output": "先给出包含离线控制流和后续在线模型接入的待确认大纲，明确密钥、费用、网络与验证边界。",
+      "files": [],
+      "expectations": [
+        "前置章节使用本地确定性逻辑展示 State、Node、Edge 或分支控制流",
+        "真实模型调用被拆成独立后续章节并标记需要网络和凭据",
+        "说明只会生成 .env.example，不会写入真实密钥",
+        "大纲确认前不创建文件"
+      ]
+    }
+  ]
+}

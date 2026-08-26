@@ -1,7 +1,7 @@
 {
   "name": "@howillmakeit/skills-dsh",
-  "version": "0.1.0",
-  "description": "Opt-in DeepSeek Harness Skill-only bundle for HOWILLMAKEIT's agent skills (undress: 技术工作去包装).",
+  "version": "0.2.0",
+  "description": "Opt-in DeepSeek Harness Skill-only bundle for HOWILLMAKEIT's technical analysis and code-first learning skills.",
   "license": "MIT",
   "type": "module",
   "files": [
@@ -13,7 +13,9 @@
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
-    "agent-skill"
+    "agent-skill",
+    "python-learning",
+    "code-tutorial"
   ],
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
@@ -24,7 +26,8 @@
     "directory": "integrations/deepseek-harness"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dsh": {
     "bundle": {
