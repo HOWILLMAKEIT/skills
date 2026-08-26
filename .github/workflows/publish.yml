@@ -80,7 +80,14 @@ jobs:
           node -e "const v=require('node:child_process').execFileSync('npm',['--version'],{encoding:'utf8'}).trim().split('.').map(Number); if(v[0] < 11 || (v[0] === 11 && v[1] < 5)) { throw new Error('npm 11.5.1 or newer is required for Trusted Publishing') }"
 
       - name: Publish npm package with OIDC
-        run: npm publish package/*.tgz --access public --ignore-scripts
+        run: |
+          shopt -s nullglob
+          packages=(package/*.tgz)
+          if [ "${#packages[@]}" -ne 1 ]; then
+            echo "Expected exactly one npm tarball, found ${#packages[@]}" >&2
+            exit 1
+          fi
+          npm publish "./${packages[0]}" --access public --ignore-scripts
 
   github-release:
     name: Create GitHub Release
