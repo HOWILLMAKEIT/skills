@@ -44,7 +44,7 @@
 ```bash
 # Claude Code：全局安装全部 skill
 npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a claude-code -y
-# Codex：全局安装全部 skill
+# Codex or deepseek harness：全局安装全部 skill
 npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
 # 只装一个 skill、装到当前项目：--skill video-summary，并去掉 -g
 # 升级：npx -y skills@latest update video-summary -g
