@@ -35,21 +35,46 @@
 
 ## 安装
 
-已查证：**DeepSeek Harness（dsh）会自动读取 `.agents` 目录**——用户级 `~/.agents/skills/` 与项目级 `<项目>/.agents/skills/`（源码 `dsh-skill-filesystem` 的默认 roots），无需任何插件或配置。所以安装就是「把 skill 目录放进 `.agents/skills/`」：
+三种方式等价（本质都是把 skill 目录放进 agent 的技能目录），任选其一。
+
+### 方式一：npx 一键安装（推荐，Claude Code / Codex）
+
+标准 [skills](https://www.npmjs.com/package/skills) 安装器，默认以软链方式装到各 agent 目录：
 
 ```bash
-git clone https://github.com/HOWILLMAKEIT/skills.git
-mkdir -p ~/.agents/skills
-cp -R skills/video-summary skills/undress skills/learn-by-running-code ~/.agents/skills/
+# Claude Code：全局安装全部 skill
+npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a claude-code -y
+# Codex：全局安装全部 skill
+npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
+# 只装一个 skill、装到当前项目：--skill video-summary，并去掉 -g
+# 升级：npx -y skills@latest update video-summary -g
 ```
 
-- **DSH**：放入后新开会话即可在 skill 列表中看到并自动触发；
-- **项目级安装**：把 skill 目录放进 `<项目>/.agents/skills/`，只对该项目生效；
-- **Claude Code** 等读取各自目录（如 `~/.claude/skills`）的 agent，做个软链即可：
+### 方式二：手动复制 / 软链（通用，含 DSH）
 
 ```bash
-ln -s ~/.agents/skills/video-summary ~/.claude/skills/video-summary
+git clone https://github.com/HOWILLMAKEIT/skills.git && cd skills
+
+# Claude Code
+mkdir -p ~/.claude/skills && cp -R video-summary undress learn-by-running-code ~/.claude/skills/
+# Codex
+mkdir -p ~/.codex/skills && cp -R video-summary undress learn-by-running-code ~/.codex/skills/
+# DSH（已查证：dsh 自动读取 ~/.agents/skills，源码 dsh-skill-filesystem 默认 roots）
+mkdir -p ~/.agents/skills && cp -R video-summary undress learn-by-running-code ~/.agents/skills/
+
+# 不想复制多份？用软链（后续升级 = git pull 即生效）
+ln -s "$(pwd)/video-summary" ~/.agents/skills/video-summary
 ```
+
+### 目录对照与生效方式
+
+| Agent | 全局技能目录 | 项目级技能目录 | 生效方式 |
+| --- | --- | --- | --- |
+| Claude Code | `~/.claude/skills/` | `<项目>/.claude/skills/` | 新开会话 |
+| Codex | `~/.codex/skills/` | `<项目>/.agents/skills/` | 新开会话 |
+| DSH | `~/.agents/skills/` | `<项目>/.agents/skills/` | 新开会话后自动触发，无需任何插件/配置 |
+
+注：Codex 与 DSH 的项目级目录相同（`.agents/skills`），装一份两边都能用。
 
 ## video-summary：视频总结
 
