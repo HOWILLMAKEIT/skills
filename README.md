@@ -4,6 +4,7 @@
 
 这个合集把日常技术工作里「值得沉淀成可复用流程」的事情，做成了带 `SKILL.md` 入口的技能包：
 
+- **better-notes**：写笔记前先核对官方文档、论文与文章，避免使用过时 API 或无依据内容；
 - **video-summary**：给 agent 一个视频链接，快速产出 BibiGPT 风格的结构化总结；
 - **undress**：帮你看穿论文、项目、简历里的包装话术；
 - **learn-by-running-code**：把一个学习主题变成「边读代码边运行边问 agent」的渐进式学习仓库。
@@ -14,6 +15,7 @@
 
 | Skill | 说明 |
 | --- | --- |
+| [better-notes](./better-notes/) | 有事实依据的技术与知识笔记：写作前先检索一手资料，核对版本、弃用和替代 API，再用简洁、无比喻、输入输出明确的方式成文 |
 | [video-summary](./video-summary/) | BibiGPT 风格视频总结：输入 Bilibili / YouTube 链接，抓取字幕/转写并生成 TL;DR、核心要点、章节时间线、金句（支持中英文） |
 | [undress](./undress/) | 技术工作去包装：去掉论文、开源项目、简历等材料中的包装性语言，说清作者实际复用了什么、修改了什么、实现了什么、验证了什么 |
 | [learn-by-running-code](./learn-by-running-code/) | 把一个学习主题做成按章节编号、每章只新增一个概念、可独立运行的代码仓库，通过学习代码掌握知识 |
@@ -56,14 +58,14 @@ npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
 git clone https://github.com/HOWILLMAKEIT/skills.git && cd skills
 
 # Claude Code
-mkdir -p ~/.claude/skills && cp -R video-summary undress learn-by-running-code ~/.claude/skills/
+mkdir -p ~/.claude/skills && cp -R better-notes video-summary undress learn-by-running-code ~/.claude/skills/
 # Codex
-mkdir -p ~/.codex/skills && cp -R video-summary undress learn-by-running-code ~/.codex/skills/
+mkdir -p ~/.codex/skills && cp -R better-notes video-summary undress learn-by-running-code ~/.codex/skills/
 # DSH（已查证：dsh 自动读取 ~/.agents/skills，源码 dsh-skill-filesystem 默认 roots）
-mkdir -p ~/.agents/skills && cp -R video-summary undress learn-by-running-code ~/.agents/skills/
+mkdir -p ~/.agents/skills && cp -R better-notes video-summary undress learn-by-running-code ~/.agents/skills/
 
 # 不想复制多份？用软链（后续升级 = git pull 即生效）
-ln -s "$(pwd)/video-summary" ~/.agents/skills/video-summary
+ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
 ```
 
 ### 目录对照与生效方式
@@ -75,6 +77,12 @@ ln -s "$(pwd)/video-summary" ~/.agents/skills/video-summary
 | DSH | `~/.agents/skills/` | `<项目>/.agents/skills/` | 新开会话后自动触发，无需任何插件/配置 |
 
 注：Codex 与 DSH 的项目级目录相同（`.agents/skills`），装一份两边都能用。
+
+## better-notes：先查资料，再写笔记
+
+**作用**：当用户要求编写、整理或重写技术与知识笔记时，先检索并阅读官方文档、发布说明、论文、官方仓库或高质量文章，再开始写作。涉及 API、命令或依赖时，会专门核对目标版本、弃用状态、替代方案和迁移方式。
+
+默认输出使用简洁 Markdown：标题后列实际使用的资料，正文直接给出定义，按主题说明前置条件、输入、处理、输出、最小示例、限制与常见错误。不会用比喻代替定义，也不会在无法取得必要来源时退回到纯记忆写作。
 
 ## video-summary：视频总结
 
