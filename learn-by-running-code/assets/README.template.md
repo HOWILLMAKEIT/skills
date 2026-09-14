@@ -17,6 +17,17 @@ uv run python 01_{{FIRST_CHAPTER_SLUG}}/main.py
 
 本仓库包含根目录 `AGENTS.md`。让支持该约定的 agent 进入仓库并说“从第 01 章开始教我”，它会先讲清本章最小知识，再通过 worked example 映射到代码，随后引导你预测、运行、修改和独立实践，并把理解检查与进度记录到 `PROGRESS.md`。
 
+## 教学方法依据
+
+本课程采用“最小知识讲解 → worked example → 代码映射 → 预测与运行 → 引导实践 → 独立实践 → 检索与自我解释”的顺序：
+
+- [Rosenshine 的教学原则](https://www.aft.org/sites/default/files/Rosenshine.pdf)：小步呈现新知识，先提供模型与引导练习，检查理解后再独立实践；
+- [Roediger 与 Karpicke（2006）](https://pubmed.ncbi.nlm.nih.gov/16507066/)：主动检索不仅测量学习，还能提高延迟保持；
+- [Chi 等（1989）](https://asu.elsevierpure.com/en/publications/self-explanations-how-students-study-and-use-examples-in-learning/)：自我解释帮助学习者把示例步骤与原理连接起来并发现理解缺口；
+- [Sweller 的认知负荷与 worked-example 研究回顾](https://link.springer.com/article/10.1007/s10648-023-09817-2)：新手先看有解释的完整示例，可以减少无效搜索占用的工作记忆。
+
+这些原则用于约束 agent 的教学方式，不会被扩写成脱离代码的长篇理论课。
+
 ## 学习路线
 
 | 章节 | 唯一新增概念 | 运行命令 | 预期现象 | 外部要求 |
