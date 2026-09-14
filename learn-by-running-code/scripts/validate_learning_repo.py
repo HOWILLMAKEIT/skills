@@ -14,10 +14,30 @@ from pathlib import Path
 CHAPTER_PATTERN = re.compile(r"^(?P<number>\d{2})_(?P<slug>[a-z0-9][a-z0-9_-]*)$")
 REQUIRED_FILES = (
     "README.md",
+    "AGENTS.md",
     "pyproject.toml",
     "uv.lock",
     ".python-version",
     ".gitignore",
+)
+
+AGENTS_REQUIRED_KEYWORDS = (
+    "角色",
+    "课程",
+    "教学卡",
+    "教学节奏",
+    "环境",
+    "进度",
+    "知识讲解",
+    "worked example",
+    "代码映射",
+    "引导实践",
+    "独立实践",
+    "检索与自我解释",
+)
+AGENTS_TEACHING_SEQUENCE = (
+    "教学顺序：知识讲解 → worked example → 代码映射 → 预测与运行 → "
+    "引导实践 → 独立实践 → 检索与自我解释"
 )
 
 
@@ -65,6 +85,18 @@ def validate(repo: Path) -> tuple[list[str], list[str]]:
     if readme and "uv sync" not in readme:
         errors.append("README.md must include the `uv sync` setup command")
 
+    agents_path = repo / "AGENTS.md"
+    agents = agents_path.read_text(encoding="utf-8") if agents_path.is_file() else ""
+    if agents:
+        for keyword in AGENTS_REQUIRED_KEYWORDS:
+            if keyword not in agents:
+                errors.append(f"AGENTS.md is missing required section keyword: {keyword}")
+        if AGENTS_TEACHING_SEQUENCE not in agents:
+            errors.append(
+                "AGENTS.md must state the knowledge-first teaching sequence: "
+                "knowledge -> worked example -> code mapping -> guided and independent practice -> retrieval"
+            )
+
     for _, chapter_dir in chapter_dirs:
         main_path = chapter_dir / "main.py"
         if not main_path.is_file():
@@ -74,6 +106,8 @@ def validate(repo: Path) -> tuple[list[str], list[str]]:
         command = f"uv run python {chapter_dir.name}/main.py"
         if readme and command not in readme:
             errors.append(f"README.md is missing chapter command: {command}")
+        if agents and command not in agents:
+            errors.append(f"AGENTS.md teaching card is missing chapter command: {command}")
 
         try:
             source = main_path.read_text(encoding="utf-8")

@@ -4,6 +4,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- 为 `learn-by-running-code` 新增 `AGENTS.md` 导师指南契约与可复用模板，使后续 Agent 能按章节继续教学并记录学习进度。
+- 新增基于 Rosenshine 明确教学、worked example、检索练习、自我解释与认知负荷研究的 `teaching-method.md` 教学方法参考。
+
+### Changed
+
+- 将 `learn-by-running-code` 的核心教学顺序从“先运行再解释”调整为“最小知识讲解 → worked example → 代码映射 → 预测与运行 → 引导实践 → 独立实践 → 检索与自我解释”。
+- 更新课程、README、章节代码和 OpenAI 提示模板，使知识讲解自然过渡到代码讲解与实践。
+- 扩展仓库校验器：强制生成 `AGENTS.md`、覆盖每章运行命令，并检查知识先行教学顺序及必要教学环节。
+
 ## [0.4.0] - 2026-09-08
 
 ### Added

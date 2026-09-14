@@ -13,6 +13,10 @@ uv run python 01_{{FIRST_CHAPTER_SLUG}}/main.py
 
 运行后你会看到：{{FIRST_EXPECTED_OBSERVATION}}
 
+## 让 agent 教你
+
+本仓库包含根目录 `AGENTS.md`。让支持该约定的 agent 进入仓库并说“从第 01 章开始教我”，它会先讲清本章最小知识，再通过 worked example 映射到代码，随后引导你预测、运行、修改和独立实践，并把理解检查与进度记录到 `PROGRESS.md`。
+
 ## 学习路线
 
 | 章节 | 唯一新增概念 | 运行命令 | 预期现象 | 外部要求 |
