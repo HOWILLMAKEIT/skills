@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-09-14
+
 ### Added
 
 - 为 `learn-by-running-code` 新增 `AGENTS.md` 导师指南契约与可复用模板，使后续 Agent 能按章节继续教学并记录学习进度。
@@ -50,7 +52,8 @@
 
 - 修复本地 npm tarball 发布流程。
 
-[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/HOWILLMAKEIT/skills/releases/tag/v0.2.0
