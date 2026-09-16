@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-09-16
+
+### Added
+
+- 新增 `better-decision` skill：从目标、约束、延迟代价、依赖和反馈中确定当前优先事项，输出最小行动、完成标准、暂缓项与复查条件。
+- 区分生产性逃避、必要准备、真实阻塞与合理休息；加入高风险决策、信息不足、双硬期限及外部操作授权边界。
+- 新增简洁使用说明、三类研究依据及局限说明、11 个可用于人工回归的场景。
+
+### Changed
+
+- 仓库 README 增加 `better-decision` 索引、介绍和手动安装路径。
+
 ## [0.5.0] - 2026-09-14
 
 ### Added
@@ -52,7 +64,8 @@
 
 - 修复本地 npm tarball 发布流程。
 
-[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.2.0...v0.3.0

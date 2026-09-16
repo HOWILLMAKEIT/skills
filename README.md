@@ -4,6 +4,7 @@
 
 这个合集把日常技术工作里「值得沉淀成可复用流程」的事情，做成了带 `SKILL.md` 入口的技能包：
 
+- **better-decision**：分清“值得做”和“现在最该做”，识别生产性逃避，把取舍落到可验证的下一步；
 - **better-notes**：让 llm 写笔记前先核对官方文档、论文与文章，避免使用过时 API 或无依据内容，同时遵循个人比较认可的笔记风格；
 - **video-summary**：给 agent 一个视频链接，快速产出 BibiGPT 风格的结构化总结；
 - **undress**：帮你看穿论文、项目、简历里的包装话术；
@@ -15,6 +16,7 @@
 
 | Skill | 说明 |
 | --- | --- |
+| [better-decision](./better-decision/) | 在多个合理任务中确定当前优先级，区分逃避、必要准备、阻塞与休息，给出最小行动和复查条件 |
 | [better-notes](./better-notes/) | 让 llm 生成有事实依据的技术与知识笔记：写作前先检索一手资料，核对版本、弃用和替代 API，再用简洁、无比喻、输入输出明确的方式成文 |
 | [video-summary](./video-summary/) | BibiGPT 风格视频总结：输入 Bilibili / YouTube 链接，抓取字幕/转写并生成 TL;DR、核心要点、章节时间线、金句（支持中英文） |
 | [undress](./undress/) | 技术工作去包装：去掉论文、开源项目、简历等材料中的包装性语言，说清作者实际复用了什么、修改了什么、实现了什么、验证了什么 |
@@ -69,11 +71,11 @@ npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
 git clone https://github.com/HOWILLMAKEIT/skills.git && cd skills
 
 # Claude Code
-mkdir -p ~/.claude/skills && cp -R better-notes video-summary undress learn-by-running-code ~/.claude/skills/
+mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ~/.claude/skills/
 # Codex
-mkdir -p ~/.codex/skills && cp -R better-notes video-summary undress learn-by-running-code ~/.codex/skills/
+mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ~/.codex/skills/
 # DSH（已查证：dsh 自动读取 ~/.agents/skills，源码 dsh-skill-filesystem 默认 roots）
-mkdir -p ~/.agents/skills && cp -R better-notes video-summary undress learn-by-running-code ~/.agents/skills/
+mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ~/.agents/skills/
 
 # 不想复制多份？用软链（后续升级 = git pull 即生效）
 ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
@@ -88,6 +90,12 @@ ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
 | DSH | `~/.agents/skills/` | `<项目>/.agents/skills/` | 新开会话后自动触发，无需任何插件/配置 |
 
 注：Codex 与 DSH 的项目级目录相同（`.agents/skills`），装一份两边都能用。
+
+## better-decision：先做当前最重要的事
+
+输入目标、候选任务、期限和可用时间，输出“当前先做什么 → 最小行动与完成标准 → 暂缓什么 → 何时复查”。例如：“我一直研究求职方法却没投简历，帮我决定今天先做什么。”
+
+它不把忙碌直接判为逃避，也不把休息判为懒惰；方法参考拖延的情绪调节解释、if–then 行动计划与进度监测研究。见[使用说明](./better-decision/README.md)与[依据及局限](./better-decision/references/evidence.md)。
 
 ## better-notes：先查资料，再写笔记
 
