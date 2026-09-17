@@ -8,7 +8,7 @@
 - **better-notes**：让 llm 写笔记前先核对官方文档、论文与文章，避免使用过时 API 或无依据内容，同时遵循个人比较认可的笔记风格；
 - **video-summary**：给 agent 一个视频链接，快速产出 BibiGPT 风格的结构化总结；
 - **undress**：帮你看穿论文、项目、简历里的包装话术；
-- **learn-by-running-code**：把一个学习主题变成“先讲最小知识，再映射到代码并实践”的渐进式学习仓库，并生成可被 Agent 自动读取的导师指南。
+- **learn-by-running-code**：先分清学知识还是做项目；学习模式生成渐进课程，项目模式经过需求澄清与规划，在真实代码库中边做边学直到验收。
 
 每个 skill 都有明确的使用边界、工作流和可验证的完成标准。
 
@@ -20,18 +20,23 @@
 | [better-notes](./better-notes/) | 让 llm 生成有事实依据的技术与知识笔记：写作前先检索一手资料，核对版本、弃用和替代 API，再用简洁、无比喻、输入输出明确的方式成文 |
 | [video-summary](./video-summary/) | BibiGPT 风格视频总结：输入 Bilibili / YouTube 链接，抓取字幕/转写并生成 TL;DR、核心要点、章节时间线、金句（支持中英文） |
 | [undress](./undress/) | 技术工作去包装：去掉论文、开源项目、简历等材料中的包装性语言，说清作者实际复用了什么、修改了什么、实现了什么、验证了什么 |
-| [learn-by-running-code](./learn-by-running-code/) | 按章节先讲最小知识，再用 worked example 映射到可独立运行的代码，通过引导实践、独立修改与检索问题完成学习 |
+| [learn-by-running-code](./learn-by-running-code/) | 知识学习与项目实作双模式：先明确意图，学习按独立章节推进，项目经多轮澄清、本地材料检查或主动调研后，按里程碑实现与验收 |
 
-### learn-by-running-code 的教学依据
+### learn-by-running-code：学知识，也做项目
 
-它不是把代码直接丢给学习者自行摸索，而是采用固定顺序：**最小知识讲解 → worked example → 代码映射 → 预测与运行 → 引导实践 → 独立实践 → 检索与自我解释**。设计参考：
+- **学知识**：“用可运行章节教我 asyncio。”先确认课程大纲，再生成独立运行的 Python/uv 章节。
+- **做项目**：“带我完成领域 SFT，我有本地数据和代码。”先交流领域、数据、预算、分工与验收；读取已有材料，需求模糊则主动调研推荐；确认计划后从最小闭环逐步完成真实交付，不强制改用课程目录或 Python/uv。
+
+详见[使用说明](./learn-by-running-code/README.md)和[项目规划流程](./learn-by-running-code/references/project-planning.md)。
+
+知识学习采用：**最小知识讲解 → worked example → 代码映射 → 预测与运行 → 引导实践 → 独立实践 → 检索与自我解释**；项目模式按里程碑补所需知识，按确认分工实现，不把整套课程练习强加给项目。教学设计参考：
 
 - [Rosenshine 的教学原则](https://www.aft.org/sites/default/files/Rosenshine.pdf)：小步讲授、教师示范、引导练习、检查理解，再独立练习；
 - [Roediger 与 Karpicke（2006）](https://pubmed.ncbi.nlm.nih.gov/16507066/)：检索练习有助于长期保持；
 - [Chi 等（1989）](https://asu.elsevierpure.com/en/publications/self-explanations-how-students-study-and-use-examples-in-learning/)：自我解释促使学习者把示例步骤连接到原理；
 - [Sweller 的认知负荷研究回顾](https://link.springer.com/article/10.1007/s10648-023-09817-2)：对新手先提供 worked example 和适当指导，减少无效搜索占用的工作记忆。
 
-每个生成仓库还必须包含根目录 `AGENTS.md`，让后续 Agent 自动按上述顺序教学，并把学习进度记录到 `PROGRESS.md`。
+两种模式都生成或增量维护根目录 `AGENTS.md` 与 `PROGRESS.md`。项目模式另用 `PROJECT.md` 保存确认范围、资源边界和验收计划；后续 Agent 可从未完成里程碑续作，不把脚手架、mock 或结构校验当成项目完成。
 
 ## 仓库结构
 

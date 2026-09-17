@@ -1,6 +1,6 @@
 # 学习仓库契约
 
-本文件规定 Skill 生成的 Python 学习仓库应当长什么样、如何运行以及如何验证。
+本文件仅规定 `learning` 模式生成的 Python 学习仓库如何组织、运行和验证。`project` 模式（包括基于已有仓库开发）使用 [project-contract.md](project-contract.md)，不受本文件的空目录、独立章节与固定工具链要求约束。
 
 ## 必需文件
 
@@ -57,7 +57,7 @@ README 至少包含：
 
 ## uv 与依赖
 
-- 默认 `requires-python = ">=3.12"`；
+- 默认 `requires-python = ">=3.12"` 和 `.python-version` 为 `3.12`；课程依赖要求其他版本时，先确认版本方案，再同步修改 Python 模板、README、AGENTS 与锁文件；
 - 依赖统一放在根 `pyproject.toml`，不要给每章创建虚拟环境；
 - 优先选择课程实际需要的最少依赖；
 - 先执行 `uv lock` 生成锁文件，再执行 `uv sync`；
@@ -92,5 +92,13 @@ uv sync
 python <skill-path>/scripts/validate_learning_repo.py .
 uv run python 01_<slug>/main.py
 ```
+
+校验器由 Python 3.11+ 运行，默认检查上述 3.12 契约。用户已确认其他课程版本时，显式传入预期值，例如：
+
+```bash
+python3 <skill-path>/scripts/validate_learning_repo.py . --python-version 3.11 --requires-python '>=3.11,<3.13'
+```
+
+这两个参数对照确认的环境，不应为了掩盖环境错误临时修改。校验器只比较声明，不代替 uv 依赖解析或运行测试；它所用的 Python 与课程运行环境可以不同。
 
 随后逐章运行所有离线示例。在线章节至少执行语法编译、导入检查和缺配置分支；只有提供了测试凭据并真正调用成功时才能标记为在线验证通过。

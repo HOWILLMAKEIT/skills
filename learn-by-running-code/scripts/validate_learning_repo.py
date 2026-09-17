@@ -46,10 +46,14 @@ def parse_args() -> argparse.Namespace:
         description="Check a learn-by-running-code repository without modifying it."
     )
     parser.add_argument("repo", type=Path, help="Path to the generated repository")
+    parser.add_argument("--python-version", default="3.12", help="Approved .python-version value")
+    parser.add_argument("--requires-python", default=">=3.12", help="Approved project.requires-python value")
     return parser.parse_args()
 
 
-def validate(repo: Path) -> tuple[list[str], list[str]]:
+def validate(
+    repo: Path, *, python_version: str = "3.12", requires_python: str = ">=3.12"
+) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -82,11 +86,15 @@ def validate(repo: Path) -> tuple[list[str], list[str]]:
 
     readme_path = repo / "README.md"
     readme = readme_path.read_text(encoding="utf-8") if readme_path.is_file() else ""
+    if readme_path.is_file() and not readme.strip():
+        errors.append("README.md must not be empty or whitespace-only")
     if readme and "uv sync" not in readme:
         errors.append("README.md must include the `uv sync` setup command")
 
     agents_path = repo / "AGENTS.md"
     agents = agents_path.read_text(encoding="utf-8") if agents_path.is_file() else ""
+    if agents_path.is_file() and not agents.strip():
+        errors.append("AGENTS.md must not be empty or whitespace-only")
     if agents:
         for keyword in AGENTS_REQUIRED_KEYWORDS:
             if keyword not in agents:
@@ -126,10 +134,10 @@ def validate(repo: Path) -> tuple[list[str], list[str]]:
     if pyproject_path.is_file():
         try:
             pyproject = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
-            requires_python = pyproject.get("project", {}).get("requires-python")
-            if requires_python != ">=3.12":
+            actual_requires_python = pyproject.get("project", {}).get("requires-python")
+            if actual_requires_python != requires_python:
                 errors.append(
-                    "pyproject.toml must set project.requires-python to `>=3.12`"
+                    f"pyproject.toml must set project.requires-python to `{requires_python}`"
                 )
         except (OSError, UnicodeError, tomllib.TOMLDecodeError) as exc:
             errors.append(f"invalid pyproject.toml: {exc}")
@@ -137,8 +145,8 @@ def validate(repo: Path) -> tuple[list[str], list[str]]:
     python_version_path = repo / ".python-version"
     if python_version_path.is_file():
         version = python_version_path.read_text(encoding="utf-8").strip()
-        if version != "3.12":
-            errors.append(".python-version must contain `3.12`")
+        if version != python_version:
+            errors.append(f".python-version must contain `{python_version}`")
 
     real_env = repo / ".env"
     if real_env.exists():
@@ -149,7 +157,9 @@ def validate(repo: Path) -> tuple[list[str], list[str]]:
 
 def main() -> int:
     args = parse_args()
-    errors, warnings = validate(args.repo.resolve())
+    errors, warnings = validate(
+        args.repo.resolve(), python_version=args.python_version, requires_python=args.requires_python
+    )
 
     for warning in warnings:
         print(f"WARNING: {warning}")
@@ -160,7 +170,8 @@ def main() -> int:
         print(f"FAILED: {len(errors)} error(s), {len(warnings)} warning(s)")
         return 1
 
-    print(f"OK: learning repository is valid ({len(warnings)} warning(s))")
+    print(f"OK: learning repository structure passed ({len(warnings)} warning(s))")
+    print("Structural checks only: dependency resolution, runtime behavior and learner understanding were NOT verified.")
     return 0
 
 

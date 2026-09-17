@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-09-17
+
+### Added
+
+- 为 `learn-by-running-code` 新增 `project` 项目实作模式：多轮澄清领域、目标、数据、代码基础、预算、资源、协作分工与验收标准；读取用户本地材料，需求模糊时主动调研并比较可行方案。
+- 新增项目规划与仓库契约、SFT 规划示例，以及 PROJECT、AGENTS、PROGRESS、README 四类项目模板；确认具体计划后在同一真实代码库上累计推进里程碑直到验收。
+- 新增只读、无工具链限制的项目文档结构校验器，以及学习/项目模式和模板一致性的 26 项自动回归测试。
+- 行为评估规格扩展为 12 个场景，覆盖意图不明、本地材料、模糊需求、已有仓库、续作、资源阻塞、范围变化和模式切换。
+
+### Changed
+
+- Skill 入口先区分 `learning` 与 `project`；保留原知识先行、独立章节的学习模式，项目模式不强制 Python/uv、空目录或每阶段独立源码。
+- 同步两种模式的教学边界、OpenAI 提示、学习模板、skill README 与仓库索引；明确脚手架、mock、结构检查均不代表真实项目完成。
+- 学习校验器支持显式传入经确认的 `--python-version` 与 `--requires-python`，保留 Python 3.12 默认值，并明确结构检查不代替实际运行。
+
 ## [0.6.0] - 2026-09-16
 
 ### Added
@@ -64,7 +79,8 @@
 
 - 修复本地 npm tarball 发布流程。
 
-[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.3.0...v0.4.0

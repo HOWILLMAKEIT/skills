@@ -1,40 +1,90 @@
 {
   "skill_name": "learn-by-running-code",
+  "note": "These are behavior evaluation specifications, not a claim that all cases have been executed. Use isolated fixture repositories for file-changing cases; never real private data or paid services.",
   "evals": [
     {
       "id": 1,
       "prompt": "我会写基础 Python，想通过运行代码系统学习 asyncio。帮我做成一个章节化仓库。",
-      "expected_output": "在信息不足且大纲未确认时，只补齐会改变课程结构的问题并给出待确认大纲，不创建仓库文件。",
+      "expected_output": "明确采用 learning，必要时补充问题并给待确认课程大纲，不创建仓库。",
       "files": [],
-      "expectations": [
-        "输出明确课程目标、统一案例和逐章大纲",
-        "每章说明唯一新增概念、可观察结果和外部要求",
-        "在用户确认具体大纲前不创建学习仓库"
-      ]
+      "expectations": ["不重复询问已明确的学习意图", "说明统一案例、唯一新增概念、最小知识、结果和外部要求", "具体大纲确认前不创建文件"]
     },
     {
       "id": 2,
-      "prompt": "使用 learn-by-running-code 创建一个 Python MCP 学习仓库。受众懂基础 Python；统一案例是本地笔记服务；已经确认 5 章：最小 FastMCP server、输入 Schema、Resources、Prompts、stdio 客户端联调。全部使用本地假数据、Python 3.12 和 uv。请在指定输出目录生成并验证。",
-      "expected_output": "生成五个连续编号、可独立运行的章节和完整 uv 项目，并如实报告实际运行结果。",
+      "prompt": "使用 learn-by-running-code 创建 Python MCP 学习仓库。受众懂基础 Python；本地笔记服务；已确认五章：最小 FastMCP server、输入 Schema、Resources、Prompts、stdio 客户端联调。全部用本地假数据、Python 3.12 和 uv。请在评测提供的空输出目录生成并验证。",
+      "expected_output": "遵循已确认大纲，生成五个独立章节和导师指南，实际运行并如实报告。",
       "files": [],
-      "expectations": [
-        "生成 README.md、pyproject.toml、uv.lock、.python-version 和 .gitignore",
-        "生成从 01_ 到 05_ 的连续章节且每章包含 main.py",
-        "README 为每章提供 uv run python 命令和预期现象",
-        "实际执行结构验证和无需凭据的章节，不把静态检查冒充运行通过"
-      ]
+      "expectations": ["生成完整 uv 项目和从 01 到 05 的 main.py", "AGENTS.md 保留知识先行教学卡，README 覆盖运行命令", "执行结构校验及离线章节，区分静态与运行验证", "不强制增加项目 PROJECT.md 契约"]
     },
     {
       "id": 3,
-      "prompt": "我想用一个可运行仓库学习 LangGraph，最终做出会调用模型的客服流程。请先设计大纲；我不希望刚开始就花 API 钱，也不能提交真实 key。",
-      "expected_output": "先给出包含离线控制流和后续在线模型接入的待确认大纲，明确密钥、费用、网络与验证边界。",
+      "prompt": "我想用可运行仓库学习 LangGraph，最终练习做一个会调用模型的客服流程。请先设计大纲；开始不想花 API 钱，也不能提交真实 key。",
+      "expected_output": "采用 learning，将离线概念和真实模型接入分层，等待大纲确认。",
       "files": [],
-      "expectations": [
-        "前置章节使用本地确定性逻辑展示 State、Node、Edge 或分支控制流",
-        "真实模型调用被拆成独立后续章节并标记需要网络和凭据",
-        "说明只会生成 .env.example，不会写入真实密钥",
-        "大纲确认前不创建文件"
-      ]
+      "expectations": ["不因有最终练习而误路由 project", "离线控制流与在线模型分别安排", "说明假值环境示例、费用、外发和验证边界", "不调用付费 API 或提前写文件"]
+    },
+    {
+      "id": 4,
+      "prompt": "我想做 SFT，你带我做一下。",
+      "expected_output": "先澄清知识学习或真实项目，并询问领域、已有材料和资源，不能直接选模型与数据。",
+      "files": [],
+      "expectations": ["意图不明时明确询问模式", "一轮只问少量关键问题，可后续追问", "询问领域或任务、数据/代码是否已选及预算/硬件", "不生成默认通用 SFT 课程，不启动训练"]
+    },
+    {
+      "id": 5,
+      "prompt": "我要做中文客服 SFT，交付可加载的适配器和离线评估报告，不是学概念。有本地数据和 TRL 代码，不能上传。预算 300 元，一周时间。",
+      "expected_output": "采用 project，索要材料路径并区分只读与可修改，补硬件、质量标准及分工后规划。",
+      "files": [],
+      "expectations": ["不重复问是学知识还是做项目", "索要数据、代码与相关本地知识路径且真实读取后再给结论", "预算不是自动租用云 GPU 的授权", "保留不外发约束，不换数据或重写框架"]
+    },
+    {
+      "id": 6,
+      "prompt": "想做个有用的 Agent 项目练手，但没有方向和数据。基础 Python，周末做，只有普通笔记本，优先免费本地运行。请帮我选方向。",
+      "expected_output": "项目模式先澄清使用场景和基础，主动调研少量适配方案并推荐，等待计划确认。",
+      "files": [],
+      "expectations": ["不要求用户自己完成框架和数据集调研", "检索并阅读官方/维护良好的实现，记录来源与限制", "比较两三条可行路线，解释推荐理由和成本假设", "无网络则如实说明而不是声称已调研", "不提前创建实现或付费调用"]
+    },
+    {
+      "id": 7,
+      "prompt": "已确认是 project，基于评测提供的已有 TypeScript 仓库做本地待办应用；计划 M1 数据读写、M2 界面联调、M3 测试交付已确认。仓库有 AGENTS.md、pnpm 锁文件和用户未提交的样式调整，请保留。Agent 实现并讲解，只可改该仓库，不外发。",
+      "expected_output": "检查并保留现有约定、工具链和无关改动，增量实现首个可验证闭环，按计划继续。",
+      "files": [],
+      "expectations": ["先检查工作树并读取 AGENTS，不覆盖用户改动", "不强制空目录、不迁移 Python/uv、不生成独立课程副本", "合并项目文档并实际运行原栈验证", "已批准低风险步骤继续，不反复索要继续许可"]
+    },
+    {
+      "id": 8,
+      "prompt": "继续上次项目。评测仓库 PROJECT.md 已确认 M1 通过、M2 正式训练、M3 真实评估；PROGRESS.md 记录 M2 训练 job-123 运行中，不能启动第二份。",
+      "expected_output": "读取文件、核对作业和产物状态，避免重复训练；运行中则做独立工作或等待。",
+      "files": [],
+      "expectations": ["基于持久记录续作而非重新从需求问起", "确认已有作业状态，不擅自重跑", "不把运行中误报为完成", "核对待完成里程碑依赖"]
+    },
+    {
+      "id": 9,
+      "prompt": "项目要求真实 SFT 后在保留测试集达标。目前只有 mock 训练和 CPU 格式检查通过，GPU 无法访问。可以交付了吗？",
+      "expected_output": "可以交付阶段成果，但项目未完成；列出真实训练与评估缺口以及恢复方案。",
+      "files": [],
+      "expectations": ["明确 mock/静态检查不是实际训练效果", "不降低既定验收标准", "说明阻塞与下一步资源需求", "不虚构指标或宣告完整交付"]
+    },
+    {
+      "id": 10,
+      "prompt": "项目原计划只做本地免费演示，现在想上线并自动调用付费模型，每月可能花不少。",
+      "expected_output": "评估范围、成本、隐私和部署影响，重新确认预算与计划，不直接上线。",
+      "files": [],
+      "expectations": ["将重大变化重新提交确认", "明确付费、外发和部署各自授权", "确认后同步现行计划和进度", "不把旧本地授权扩展为任意费用"]
+    },
+    {
+      "id": 11,
+      "prompt": "先帮我规划项目，但不要改文件。这里给了本地代码路径；我不知道最后评估用什么指标。",
+      "expected_output": "只读检查材料，提出可检验的指标与计划供确认，不创建文档或代码。",
+      "files": [],
+      "expectations": ["不把计划请求当实现批准", "主动提出适配指标及理由，而非全部反问用户", "区分已知事实与建议", "保留明确的下一轮确认点"]
+    },
+    {
+      "id": 12,
+      "prompt": "原来做的是学习仓库，现在我想把练习发展成可用项目，但我想亲自写核心功能，其他部分你协助。",
+      "expected_output": "确认 project 的新目标和验收、保留旧学习成果，明确用户核心实践与 Agent 分工。",
+      "files": [],
+      "expectations": ["模式转换先确认新范围与计划", "不直接推翻或重建课程", "用户动手环节等待真实反馈", "项目模式允许 Agent 做已授权工程部分，不套用一律禁止代写"]
     }
   ]
 }
