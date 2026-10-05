@@ -108,6 +108,8 @@ ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
 
 默认输出使用简洁 Markdown：标题后列实际使用的资料，正文直接给出定义，按主题说明前置条件、输入、处理、输出、最小示例、限制与常见错误。不会用比喻代替定义，也不会在无法取得必要来源时退回到纯记忆写作。
 
+内置 [humanizer 风格编辑](./better-notes/references/humanizer.md)，无需额外安装：事实草稿完成后，清理无意义对比、空泛铺垫、重复结尾、机械排比、宣传词和装饰性加粗。保留代码、公式、链接以及版本、条件、真实不确定性和引用归属，只交付最终笔记，不附编辑过程或 AI 检测评分。
+
 ## video-summary：视频总结
 
 **作用**：参考 [BibiGPT-v1](https://github.com/JimmyLv/BibiGPT-v1) 的总结管线，让 agent 收到视频链接后自动完成「URL 解析 → 字幕/转写抓取 → 结构化总结」两步流程，输出：

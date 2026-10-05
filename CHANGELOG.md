@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-05
+
+### Added
+
+- 为 `better-notes` 内置 humanizer 风格编辑参考与人工回归场景，无需额外安装 `humanizer`。
+- 明确去 AI 味的事实保护边界：保留技术内容、版本、实验条件、不确定性、引用归属和用户声音，不虚构经历或承诺通过 AI 检测。
+
+### Changed
+
+- 写作流程增加事实草稿后的内部风格编辑与前后核对，清理无意义对比、空泛铺垫、重复结尾、机械排比、宣传词及装饰格式，只交付最终笔记。
+- 笔记风格指南与 README 同步新流程；保留有信息的对比、真实三项列表、语义箭头、必要限制和验证状态。
+
 ## [0.7.0] - 2026-09-17
 
 ### Added
@@ -79,7 +91,8 @@
 
 - 修复本地 npm tarball 发布流程。
 
-[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.4.0...v0.5.0
