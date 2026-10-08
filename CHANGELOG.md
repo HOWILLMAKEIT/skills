@@ -4,6 +4,22 @@
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-08
+
+### Added
+
+- 新增 `gpt-paper-image`：检索近期顶会图例、编写提示词、用 GPT Image 2 生图并重建为原生可编辑 PPT。
+- `better-notes` 同步 Obsidian Datacore 交互组件支持：环境检查、组件示例、冒烟测试与回归场景。
+- 为 `undress`、`learn-by-running-code`、`better-notes`、`better-decision`、`video-summary` 新增 `references/language-precision.md`：把 ASD-STE100 的写作原则（一句一事、一词一义、具体动词、固定情态词与证据标签）和 humanizer 的结构编辑方法改写为中文输出规则，默认 80% 模式。
+
+- `better-notes` 新增 `references/widget-design.md`：从 frontend-design、dataviz 和 artifact-diagramming 提取并改写的 Datacore 组件设计准则（沿用主题、选图形式、标记与交互、文案、无障碍），并加入 5 个回归场景。
+
+### Changed
+
+- `better-notes` 不再要求在笔记正文里写组件依赖和验证状态说明，改在回复里报告。
+- 各 SKILL.md 增加语言准确性要求及交付检查；`learn-by-running-code` 的 AGENTS 模板同步加入讲解与指令语言条目；`better-notes` 的 humanizer 参考与新规则对齐句长参考值的用法。
+- 本规范不含 ASD-STE100 词典，也不声称符合该标准；去 AI 味部分注明改写自 [blader/humanizer](https://github.com/blader/humanizer)（MIT），README 新增 Acknowledgements。
+
 ## [0.8.0] - 2026-10-05
 
 ### Added

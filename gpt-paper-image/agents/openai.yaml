@@ -1,0 +1,4 @@
+interface:
+  display_name: "GPT Paper Image"
+  short_description: "参考最新顶会插图，用 GPT Image 2 生图并重建可编辑 PPT"
+  default_prompt: "使用 $gpt-paper-image，检索相关领域近期顶会同类型插图，生成图片并重建为可编辑 PPT，保存原图、提示词、重建源文件与验证记录。"

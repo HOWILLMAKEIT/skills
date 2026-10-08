@@ -33,7 +33,7 @@
 - 保留“输入 → 处理 → 输出”中的语义箭头、Mermaid 的真实关系和有助于理解的表格；删除纯装饰箭头。
 - 合并叠加限定词，例如将“可能在某些情况下也许会”改为“在这些条件下可能会”，并写明已有资料支持的条件。保留真实不确定性、推断标签、安全警告和“未运行验证”。
 - 用明确主语和具体动词说明动作。不要把准确的技术名称换成新同义词，也不要为追求主动语态猜测执行者。
-- 段落长度由解释需要决定。真实三项列表、短句、来源日期和必要限制都可以保留，不设句数、词数或段落数指标。
+- 段落长度由解释需要决定。真实三项列表、短句、来源日期和必要限制都可以保留。叙述段落不设句数、词数或段落数指标；步骤句和定义句的长度参考值见 [language-precision.md](language-precision.md)，只用于定位该拆分的句子。
 
 ## 内部编辑流程
 
@@ -68,4 +68,4 @@
 
 ## 设计来源
 
-编辑方法参考本地 `humanizer` skill 的结构检查、保留原意、作者声音和嵌入式交付设计，并针对技术笔记收紧创作边界。其模式参考 Wikipedia 的 [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)。本文是技术笔记的编辑约束，不将风格模式当作可靠的 AI 检测证据。
+编辑方法参考 [blader/humanizer](https://github.com/blader/humanizer)（作者 [blader / Siqi Chen](https://github.com/blader)，MIT 协议，Copyright (c) 2025 Siqi Chen）的结构检查、保留原意、作者声音和嵌入式交付设计，并针对技术笔记收紧创作边界。其模式参考 Wikipedia 的 [Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)。本文是技术笔记的编辑约束，不将风格模式当作可靠的 AI 检测证据。
