@@ -12,9 +12,10 @@ import tempfile
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = {'generated-original', 'editable-pptx', 'prompt', 'reference-notes',
             'generation-record', 'source', 'export', 'preview', 'qa'}
-ROLES = REQUIRED | {'reference', 'metadata'}
-FOLDERS = ('references', 'prompts', 'generated', 'generation', 'editable',
-           'source', 'exports', 'previews', 'qa')
+HANDOFF_REQUIRED = {'reference', 'reference-notes', 'prompt', 'handoff'}
+ROLES = REQUIRED | HANDOFF_REQUIRED | {'metadata'}
+FOLDERS = ('references', 'references/images', 'prompts', 'handoff', 'generated',
+           'generation', 'editable', 'source', 'exports', 'previews', 'qa')
 
 
 def digest(path):
@@ -114,7 +115,11 @@ def add(value, source, role, relative):
     return item
 
 
-def verify(value, complete=False):
+def verify(value, complete=False, stage=None):
+    if stage not in {None, 'handoff'}:
+        raise ValueError('Unknown verification stage.')
+    if complete and stage is not None:
+        raise ValueError('Choose either complete delivery or a workflow stage.')
     root = root_path(value)
     data = read_manifest(root)
     errors = []
@@ -130,10 +135,16 @@ def verify(value, complete=False):
         elif digest(path) != item['sha256']:
             errors.append('Hash mismatch: ' + rel)
     roles = {x['role'] for x in data['files']}
-    missing = sorted(REQUIRED - roles) if complete else []
+    required = set()
+    if complete:
+        required = REQUIRED
+    elif stage == 'handoff':
+        required = HANDOFF_REQUIRED
+    missing = sorted(required - roles)
     errors.extend('Missing role: ' + role for role in missing)
     return {'ok': not errors, 'file_count': len(data['files']),
             'complete_roles_checked': complete, 'errors': errors,
+            'stage_roles_checked': stage,
             'scope': 'File preservation only; generation provenance and visual quality need review.'}
 
 
@@ -143,7 +154,10 @@ def main():
     p = sub.add_parser('init'); p.add_argument('root')
     p = sub.add_parser('add'); p.add_argument('root'); p.add_argument('source')
     p.add_argument('--role', required=True, choices=sorted(ROLES)); p.add_argument('--to', required=True)
-    p = sub.add_parser('verify'); p.add_argument('root'); p.add_argument('--complete', action='store_true')
+    p = sub.add_parser('verify'); p.add_argument('root')
+    checks = p.add_mutually_exclusive_group()
+    checks.add_argument('--complete', action='store_true')
+    checks.add_argument('--stage', choices=['handoff'])
     args = parser.parse_args()
     try:
         if args.command == 'init':
@@ -151,7 +165,7 @@ def main():
         elif args.command == 'add':
             result = add(args.root, args.source, args.role, args.to)
         else:
-            result = verify(args.root, args.complete)
+            result = verify(args.root, args.complete, args.stage)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get('ok', True) else 1
     except (OSError, ValueError, KeyError) as exc:

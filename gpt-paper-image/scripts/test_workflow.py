@@ -69,6 +69,39 @@ class WorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             bundle.root_path(bundle.SKILL_ROOT / 'private-artifacts')
 
+    def test_handoff_ready_without_generated_image_or_ppt(self):
+        root = bundle.initialize(self.base / 'run')
+        self.assertTrue((root / 'references/images').is_dir())
+        self.assertTrue((root / 'handoff').is_dir())
+        image = self.base / 'reference.png'
+        Image.new('RGB', (4, 4), 'white').save(image)
+        notes = self.base / 'notes.json'; notes.write_text('{}')
+        prompt = self.base / 'prompt.txt'; prompt.write_text('A generic diagram.')
+        handoff = self.base / 'handoff.md'; handoff.write_text('Awaiting user image.')
+        for src, role, rel in [
+            (image, 'reference', 'references/images/ref-01.png'),
+            (notes, 'reference-notes', 'references/style-references.json'),
+            (prompt, 'prompt', 'prompts/v001.txt'),
+            (handoff, 'handoff', 'handoff/web-generation.md'),
+        ]:
+            bundle.add(root, src, role, rel)
+        self.assertTrue(bundle.verify(root, stage='handoff')['ok'])
+        self.assertFalse(bundle.verify(root, complete=True)['ok'])
+        (root / 'references/images/ref-01.png').write_bytes(b'changed')
+        self.assertIn('Hash mismatch: references/images/ref-01.png',
+                      bundle.verify(root, stage='handoff')['errors'])
+
+    def test_handoff_requires_reference_image_and_instructions(self):
+        root = bundle.initialize(self.base / 'run')
+        text = self.base / 'prompt.txt'; text.write_text('A generic diagram.')
+        bundle.add(root, text, 'prompt', 'prompts/v001.txt')
+        result = bundle.verify(root, stage='handoff')
+        self.assertFalse(result['ok'])
+        self.assertIn('Missing role: reference', result['errors'])
+        self.assertIn('Missing role: handoff', result['errors'])
+        with self.assertRaises(ValueError):
+            bundle.verify(root, complete=True, stage='handoff')
+
     def test_native_gradient_roundtrip_without_changing_original(self):
         path = self.base / 'native.pptx'; fixture(path)
         sha = hashlib.sha256(path.read_bytes()).hexdigest()

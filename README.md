@@ -43,6 +43,7 @@
 
 ### News
 
+- **2026-10-09** 🖼️ v0.10.0：`gpt-paper-image` 改为人机协作：GPT 保存参考图并编写提示词，用户网页生图，GPT 再重建可编辑 PPT。
 - **2026-10-08** 🧩 v0.9.0：新增 `gpt-paper-image`；`better-notes` 加入 Obsidian Datacore 组件与设计准则；五个 skill 加入共享的语言准确性规范。详见 [CHANGELOG](./CHANGELOG.md)。
 - **2026-10-05** ✍️ v0.8.0：`better-notes` 内置 humanizer 风格编辑。
 - **2026-09-17** 🧑‍💻 v0.7.0：`learn-by-running-code` 新增项目实作模式。
@@ -63,7 +64,7 @@
 | [better-notes](./better-notes/) | 让 llm 写出有事实依据的技术笔记，避免过时 API 和无依据内容 | 带来源与访问日期的 Markdown 笔记；Obsidian 下用 Datacore 组件取代 Mermaid |
 | [video-summary](./video-summary/) | 给一个 Bilibili / YouTube 链接，快速看懂视频 | TL;DR、带真实时间戳的要点、章节时间线、金句 |
 | [undress](./undress/) | 论文、项目、简历的包装话术 | 作者实际复用、修改、实现、验证了什么，以及哪些结论缺证据 |
-| [gpt-paper-image](./gpt-paper-image/) | 论文主图、方法图的绘制与后期修改 | 原图、提示词、原生可编辑 PPT 与验证记录 |
+| [gpt-paper-image](./gpt-paper-image/) | 论文插图的人机协作绘制与后期修改 | 参考图、网页生图提示词、原生可编辑 PPT 与验证记录 |
 | [learn-by-running-code](./learn-by-running-code/) | 学一项技术，或做一个真实项目 | 渐进式可运行课程，或经澄清、规划、验收的项目代码 |
 
 ## How It Works
@@ -180,7 +181,7 @@ export BILIBILI_COOKIES_FROM_BROWSER=chrome   # 或 edge；safari 受 macOS 隐�
 
 ### gpt-paper-image：论文插图与可编辑 PPT
 
-使用示例：“用 `$gpt-paper-image` 为这篇论文绘制方法图，并保存生成原图与可编辑 PPT。”流程覆盖近期领域顶会图例检索、公开绘图方法辅助提示词、GPT Image 2 生图、原生 PPT 重建及实际导出复核。
+使用示例：“用 `$gpt-paper-image` 为这篇论文搜集参考图并写提示词，我在网页端手动生图后，你再转成可编辑 PPT。”GPT 先保存近期领域顶会同类型参考图，结合论文或代码及公开绘图方法准备提示词与上传清单；用户手动生图并提供原图后，GPT 再进行原生 PPT 重建、实际导出复核与留档。已有满意原图时可直接转换。
 
 任务素材保存在对应项目中；技能包仅包含通用流程、公开来源链接和合成测试代码。详见 [SKILL.md](./gpt-paper-image/SKILL.md)。
 

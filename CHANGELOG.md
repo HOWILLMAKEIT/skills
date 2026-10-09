@@ -4,6 +4,20 @@
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-09
+
+### Changed
+
+- `gpt-paper-image` 默认采用人机协作流程：GPT 搜集并保存领域顶会同类型参考图，结合论文或代码编写提示词，用户在网页端手动生图并提供选定原图，GPT 再重建原生可编辑 PPT、实际导出与复核。
+- 参考图保存到 `references/images/`，提示词明确各图借鉴用途和上传顺序；新增网页生图交接清单、等待原图与恢复任务说明。
+- 区分准备稿与实际提交提示词，手动网页生图的未知模型、时间及来源信息如实留空；已有满意原图可直接进入 PPT 重建。
+- 更新 skill 入口、提示词模板、交付规范、OpenAI UI 提示及仓库使用说明，保留原图归档、原生对象重建和实际 PPT 导出验证要求。
+
+### Added
+
+- 归档脚本新增 `handoff` 角色和 `verify --stage handoff`，单独检查参考图、提示词及交接清单，不要求尚未生成的原图或 PPT；保留原有 `--complete` 最终交付检查。
+- 新增两项交接阶段回归测试，覆盖准备完成与最终完成的区分、参考图篡改及缺失交接材料；全部九项合成测试通过。
+
 ## [0.9.0] - 2026-10-08
 
 ### Added
@@ -107,7 +121,9 @@
 
 - 修复本地 npm tarball 发布流程。
 
-[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.5.0...v0.6.0
