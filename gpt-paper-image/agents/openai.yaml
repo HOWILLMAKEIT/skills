@@ -1,4 +1,0 @@
-interface:
-  display_name: "GPT Paper Image"
-  short_description: "搜集顶会参考图并编写提示词，交由用户网页生图，再重建可编辑 PPT"
-  default_prompt: "使用 $gpt-paper-image，结合论文或代码搜集并保存顶会同类型参考图，准备网页生图提示词与交接清单；我手动生图并提供原图后，再重建可编辑 PPT、导出验证并留档。"

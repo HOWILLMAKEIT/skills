@@ -43,6 +43,7 @@
 
 ### News
 
+- **2026-10-14** ✍️ v0.11.0：`gpt-paper-image` 改名为 `ai-paper-writing`，新增摘要、intro、实验等段落的三步参考式写作；`better-notes` 新增论文笔记固定模板。详见 [CHANGELOG](./CHANGELOG.md)。
 - **2026-10-09** 🖼️ v0.10.0：`gpt-paper-image` 改为人机协作：GPT 保存参考图并编写提示词，用户网页生图，GPT 再重建可编辑 PPT。
 - **2026-10-08** 🧩 v0.9.0：新增 `gpt-paper-image`；`better-notes` 加入 Obsidian Datacore 组件与设计准则；五个 skill 加入共享的语言准确性规范。详见 [CHANGELOG](./CHANGELOG.md)。
 - **2026-10-05** ✍️ v0.8.0：`better-notes` 内置 humanizer 风格编辑。
@@ -61,10 +62,10 @@
 | Skill | 解决的问题 | 主要产出 |
 | --- | --- | --- |
 | [better-decision](./better-decision/) | 多件事都合理，不知道现在先做哪件；区分逃避、必要准备、阻塞与休息 | 当前优先事项、最小行动、暂缓项、复查条件 |
-| [better-notes](./better-notes/) | 让 llm 写出有事实依据的技术笔记，避免过时 API 和无依据内容 | 带来源与访问日期的 Markdown 笔记；Obsidian 下用 Datacore 组件取代 Mermaid |
+| [better-notes](./better-notes/) | 让 llm 写出有事实依据的技术笔记，避免过时 API 和无依据内容 | 带来源与访问日期的 Markdown 笔记；论文笔记按固定四部分模板写；Obsidian 下用 Datacore 组件取代 Mermaid |
 | [video-summary](./video-summary/) | 给一个 Bilibili / YouTube 链接，快速看懂视频 | TL;DR、带真实时间戳的要点、章节时间线、金句 |
 | [undress](./undress/) | 论文、项目、简历的包装话术 | 作者实际复用、修改、实现、验证了什么，以及哪些结论缺证据 |
-| [gpt-paper-image](./gpt-paper-image/) | 论文插图的人机协作绘制与后期修改 | 参考图、网页生图提示词、原生可编辑 PPT 与验证记录 |
+| [ai-paper-writing](./ai-paper-writing/) | 论文写作：插图的人机协作绘制，以及摘要、intro、实验等段落的参考式写作 | 参考图、生图提示词、可编辑 PPT；顶会同段落参考集、写法总结、成稿 |
 | [learn-by-running-code](./learn-by-running-code/) | 学一项技术，或做一个真实项目 | 渐进式可运行课程，或经澄清、规划、验收的项目代码 |
 
 ## How It Works
@@ -109,11 +110,11 @@ npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
 git clone https://github.com/HOWILLMAKEIT/skills.git && cd skills
 
 # Claude Code
-mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code gpt-paper-image ~/.claude/skills/
+mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ai-paper-writing ~/.claude/skills/
 # Codex
-mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code gpt-paper-image ~/.codex/skills/
+mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ai-paper-writing ~/.codex/skills/
 # DSH（已查证：dsh 自动读取 ~/.agents/skills，源码 dsh-skill-filesystem 默认 roots）
-mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code gpt-paper-image ~/.agents/skills/
+mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ai-paper-writing ~/.agents/skills/
 
 # 不想复制多份？用软链（后续升级 = git pull 即生效）
 ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
@@ -179,11 +180,19 @@ export BILIBILI_COOKIES_FROM_BROWSER=chrome   # 或 edge；safari 受 macOS 隐�
 
 输入论文、仓库、博客或简历项目，输出作者实际复用了什么、修改了什么、实现了什么、验证了什么。区分概念复杂度、实现难度、实验严谨度和证据强度；无法验证的结论写“没有足够证据”，不替作者补全故事，也不反向贬低工作。
 
-### gpt-paper-image：论文插图与可编辑 PPT
+### ai-paper-writing：论文插图与文字段落
 
-使用示例：“用 `$gpt-paper-image` 为这篇论文搜集参考图并写提示词，我在网页端手动生图后，你再转成可编辑 PPT。”GPT 先保存近期领域顶会同类型参考图，结合论文或代码及公开绘图方法准备提示词与上传清单；用户手动生图并提供原图后，GPT 再进行原生 PPT 重建、实际导出复核与留档。已有满意原图时可直接转换。
+分两类任务。
 
-任务素材保存在对应项目中；技能包仅包含通用流程、公开来源链接和合成测试代码。详见 [SKILL.md](./gpt-paper-image/SKILL.md)。
+**画图**：“用 `$ai-paper-writing` 为这篇论文搜集参考图并写提示词，我在网页端手动生图后，你再转成可编辑 PPT。”GPT 先保存近期领域顶会同类型参考图，结合论文或代码及公开绘图方法准备提示词与上传清单；用户手动生图并提供原图后，GPT 再进行原生 PPT 重建、实际导出复核与留档。已有满意原图时可直接转换。
+
+**写段落**（摘要、intro、实验等）：“用 `$ai-paper-writing` 搜集同领域顶会的 intro。”分三步，每步完成后暂停，等你确认才继续：
+
+1. **搜集**：把相关顶会论文的对应段落存成 md，放进 `论文写作/参考<段落>/`，文件名为 `年份 级别 论文名`（如 `2026 AAAI EoH-S.md`），并写清单；不做分析。
+2. **总结**：你要求后，通读全部文件，写出逐篇段落功能图，归纳共同的逻辑顺序、常见变体和长度分布，结论带 n/N。
+3. **写作**：你要求后，读你的代码和草稿，按总结出的逻辑骨架写作，缺失的数据标“待确认”，并用脚本检查成稿与参考文件没有连续相同的片段。
+
+任务素材保存在对应项目中；技能包仅包含通用流程、公开来源链接和合成测试代码。详见 [SKILL.md](./ai-paper-writing/SKILL.md)。
 
 ### learn-by-running-code：学知识，也做项目
 

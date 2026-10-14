@@ -12,6 +12,7 @@ from pptx.oxml.xmlchemy import OxmlElement
 from pptx.oxml.ns import qn
 
 import bundle
+import overlap_check
 from audit_pptx import audit
 from native_shapes import clear_effects, linear_gradient
 
@@ -33,7 +34,7 @@ def fixture(path, picture=False, group=False):
 
 class WorkflowTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='gpt-paper-image-test-')
+        self.temp = tempfile.TemporaryDirectory(prefix='ai-paper-writing-test-')
         self.base = Path(self.temp.name)
 
     def tearDown(self):
@@ -143,6 +144,22 @@ class WorkflowTests(unittest.TestCase):
         self.assertFalse(result['ok'])
         self.assertEqual(result['slides'][0]['picture_objects'], 0)
         self.assertEqual(result['slides'][0]['image_fills'], 1)
+
+
+class OverlapCheckTests(unittest.TestCase):
+    def test_detects_copied_run_and_ignores_paraphrase(self):
+        refs = {"ref.md": "Automated design with language models has recently become a successful research direction in many areas."}
+        copied = "We note that automated design with language models has recently become a successful research direction."
+        paraphrase = "Using language models to design algorithms is now a productive line of work."
+        hits = overlap_check.find_overlaps(copied, refs)
+        self.assertEqual(len(hits), 1)
+        self.assertIn("automated design with language models has recently become a successful research direction", hits[0][1])
+        self.assertEqual(overlap_check.find_overlaps(paraphrase, refs), [])
+
+    def test_detects_copied_chinese_run(self):
+        refs = {"ref.md": "近年来大语言模型驱动的自动启发式设计取得了显著进展并被广泛应用"}
+        draft = "我们认为大语言模型驱动的自动启发式设计取得了显著进展，但仍有局限。"
+        self.assertTrue(overlap_check.find_overlaps(draft, refs))
 
 
 if __name__ == '__main__':

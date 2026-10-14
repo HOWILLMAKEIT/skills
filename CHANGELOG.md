@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-14
+
+### Changed
+
+- `gpt-paper-image` 改名为 `ai-paper-writing`，图片绘制流程不变；安装命令、README 与 skill 元数据同步更新。已安装的旧名副本需自行移除后重新安装。
+
+### Added
+
+- `ai-paper-writing` 新增论文文字段落写作（摘要、intro、实验等），分三步且每步暂停：搜集顶会同段落存为 md（命名 `年份 级别 论文名`，与参考图片约定一致）、阅读并总结写法与共同逻辑、按逻辑骨架结合用户代码和草稿写作。流程见 `references/text-section-workflow.md`。
+- 新增 `scripts/overlap_check.py`：检查成稿与参考文件的连续相同片段（英文 8 词、中文 15 字），并加入 2 项测试；`ai-paper-writing` 全部 11 项测试通过。
+- `better-notes` 新增论文笔记分类：笔记对象是论文时，按固定四部分模板写（研究现状和作者动机、方法简要介绍并附论文主图、方法细节并画流程图、实验），模板见 `references/paper-note-template.md`，并加入 12 个回归场景（`evals/paper-note-cases.md`）。
+
 ## [0.10.0] - 2026-10-09
 
 ### Changed
@@ -121,7 +133,8 @@
 
 - 修复本地 npm tarball 发布流程。
 
-[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/HOWILLMAKEIT/skills/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/HOWILLMAKEIT/skills/compare/v0.7.0...v0.8.0

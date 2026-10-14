@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Paper Writing"
+  short_description: "论文写作：图片走参考图→提示词→网页生图→可编辑 PPT；摘要、intro、实验等段落走搜集顶会同段落→总结写法→按逻辑写作，每步暂停"
+  default_prompt: "使用 $ai-paper-writing。画图：搜集顶会参考图并写提示词，我手动生图后再重建可编辑 PPT。写段落：先搜集同领域顶会的对应段落到文件夹并暂停；我需要时再总结写法，再暂停；之后结合我的代码和草稿完成写作。"
