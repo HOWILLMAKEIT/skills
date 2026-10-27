@@ -8,7 +8,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-HOWILLMAKEIT%2Fskills-000000?logo=github&logoColor=white)](https://github.com/HOWILLMAKEIT/skills)&#160;
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)&#160;
-[![Skills](https://img.shields.io/badge/skills-6-blue.svg)](#skills)&#160;
+[![Skills](https://img.shields.io/badge/skills-5-blue.svg)](#skills)&#160;
 [![Agent Skills](https://img.shields.io/badge/spec-Agent%20Skills-6b46c1.svg)](https://agentskills.io)&#160;
 [![GitHub stars](https://img.shields.io/github/stars/HOWILLMAKEIT/skills?style=social)](https://github.com/HOWILLMAKEIT/skills)
 
@@ -47,7 +47,6 @@
 - **2026-10-09** 🖼️ v0.10.0：`gpt-paper-image` 改为人机协作：GPT 保存参考图并编写提示词，用户网页生图，GPT 再重建可编辑 PPT。
 - **2026-10-08** 🧩 v0.9.0：新增 `gpt-paper-image`；`better-notes` 加入 Obsidian Datacore 组件与设计准则；五个 skill 加入共享的语言准确性规范。详见 [CHANGELOG](./CHANGELOG.md)。
 - **2026-10-05** ✍️ v0.8.0：`better-notes` 内置 humanizer 风格编辑。
-- **2026-09-17** 🧑‍💻 v0.7.0：`learn-by-running-code` 新增项目实作模式。
 - **2026-09-16** 🎯 v0.6.0：新增 `better-decision`。
 
 <details>
@@ -66,7 +65,6 @@
 | [video-summary](./video-summary/) | 给一个 Bilibili / YouTube 链接，快速看懂视频 | TL;DR、带真实时间戳的要点、章节时间线、金句 |
 | [undress](./undress/) | 论文、项目、简历的包装话术 | 作者实际复用、修改、实现、验证了什么，以及哪些结论缺证据 |
 | [ai-paper-writing](./ai-paper-writing/) | 论文写作：插图的人机协作绘制，以及摘要、intro、实验等段落的参考式写作 | 参考图、生图提示词、可编辑 PPT；顶会同段落参考集、写法总结、成稿 |
-| [learn-by-running-code](./learn-by-running-code/) | 学一项技术，或做一个真实项目 | 渐进式可运行课程，或经澄清、规划、验收的项目代码 |
 
 ## How It Works
 
@@ -86,7 +84,7 @@ flowchart LR
 
 1. `SKILL.md` 的 `description` 决定何时触发；正文给出工作流，参考文档按需加载。
 2. 事实类内容先读一手资料，再写正文；无法取得时说明缺什么，不用记忆补全。
-3. `better-decision`、`better-notes`、`undress`、`video-summary`、`learn-by-running-code` 共用一份 `references/language-precision.md`：把 [ASD-STE100](https://www.asd-ste100.org/)（简化技术英语）的写作原则和 [humanizer](https://github.com/blader/humanizer) 的结构编辑改写成中文规则，默认 80% 模式。它不含 STE 词典，也不声称符合该标准。
+3. `better-decision`、`better-notes`、`undress`、`video-summary` 共用一份 `references/language-precision.md`：把 [ASD-STE100](https://www.asd-ste100.org/)（简化技术英语）的写作原则和 [humanizer](https://github.com/blader/humanizer) 的结构编辑改写成中文规则，默认 80% 模式。它不含 STE 词典，也不声称符合该标准。
 4. 交付前对照完成标准：结构校验通过不等于效果已验证，两者分开报告。
 
 ## Quick Start
@@ -110,11 +108,11 @@ npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
 git clone https://github.com/HOWILLMAKEIT/skills.git && cd skills
 
 # Claude Code
-mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ai-paper-writing ~/.claude/skills/
+mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing ~/.claude/skills/
 # Codex
-mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ai-paper-writing ~/.codex/skills/
+mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing ~/.codex/skills/
 # DSH（已查证：dsh 自动读取 ~/.agents/skills，源码 dsh-skill-filesystem 默认 roots）
-mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress learn-by-running-code ai-paper-writing ~/.agents/skills/
+mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing ~/.agents/skills/
 
 # 不想复制多份？用软链（后续升级 = git pull 即生效）
 ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
@@ -193,27 +191,6 @@ export BILIBILI_COOKIES_FROM_BROWSER=chrome   # 或 edge；safari 受 macOS 隐�
 3. **写作**：你要求后，读你的代码和草稿，按总结出的逻辑骨架写作，缺失的数据标“待确认”，并用脚本检查成稿与参考文件没有连续相同的片段。
 
 任务素材保存在对应项目中；技能包仅包含通用流程、公开来源链接和合成测试代码。详见 [SKILL.md](./ai-paper-writing/SKILL.md)。
-
-### learn-by-running-code：学知识，也做项目
-
-- **学知识**：“用可运行章节教我 asyncio。”先确认课程大纲，再生成独立运行的 Python/uv 章节。
-- **做项目**：“带我完成领域 SFT，我有本地数据和代码。”先交流领域、数据、预算、分工与验收；读取已有材料，需求模糊则主动调研推荐；确认计划后从最小闭环逐步完成真实交付，不强制改用课程目录或 Python/uv。
-
-详见[使用说明](./learn-by-running-code/README.md)和[项目规划流程](./learn-by-running-code/references/project-planning.md)。
-
-知识学习采用：**最小知识讲解 → worked example → 代码映射 → 预测与运行 → 引导实践 → 独立实践 → 检索与自我解释**；项目模式按里程碑补所需知识，按确认分工实现，不把整套课程练习强加给项目。
-
-两种模式都生成或增量维护根目录 `AGENTS.md` 与 `PROGRESS.md`。项目模式另用 `PROJECT.md` 保存确认范围、资源边界和验收计划；后续 Agent 可从未完成里程碑续作，不把脚手架、mock 或结构校验当成项目完成。
-
-<details>
-<summary>教学设计参考</summary>
-
-- [Rosenshine 的教学原则](https://www.aft.org/sites/default/files/Rosenshine.pdf)：小步讲授、教师示范、引导练习、检查理解，再独立练习；
-- [Roediger 与 Karpicke（2006）](https://pubmed.ncbi.nlm.nih.gov/16507066/)：检索练习有助于长期保持；
-- [Chi 等（1989）](https://asu.elsevierpure.com/en/publications/self-explanations-how-students-study-and-use-examples-in-learning/)：自我解释促使学习者把示例步骤连接到原理；
-- [Sweller 的认知负荷研究回顾](https://link.springer.com/article/10.1007/s10648-023-09817-2)：对新手先提供 worked example 和适当指导，减少无效搜索占用的工作记忆。
-
-</details>
 
 ## Project Structure
 
