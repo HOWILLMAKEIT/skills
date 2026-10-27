@@ -8,7 +8,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-HOWILLMAKEIT%2Fskills-000000?logo=github&logoColor=white)](https://github.com/HOWILLMAKEIT/skills)&#160;
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)&#160;
-[![Skills](https://img.shields.io/badge/skills-5-blue.svg)](#skills)&#160;
+[![Skills](https://img.shields.io/badge/skills-6-blue.svg)](#skills)&#160;
 [![Agent Skills](https://img.shields.io/badge/spec-Agent%20Skills-6b46c1.svg)](https://agentskills.io)&#160;
 [![GitHub stars](https://img.shields.io/github/stars/HOWILLMAKEIT/skills?style=social)](https://github.com/HOWILLMAKEIT/skills)
 
@@ -65,6 +65,7 @@
 | [video-summary](./video-summary/) | 给一个 Bilibili / YouTube 链接，快速看懂视频 | TL;DR、带真实时间戳的要点、章节时间线、金句 |
 | [undress](./undress/) | 论文、项目、简历的包装话术 | 作者实际复用、修改、实现、验证了什么，以及哪些结论缺证据 |
 | [ai-paper-writing](./ai-paper-writing/) | 论文写作：插图的人机协作绘制，以及摘要、intro、实验等段落的参考式写作 | 参考图、生图提示词、可编辑 PPT；顶会同段落参考集、写法总结、成稿 |
+| [project-building](./project-building/) | 建立项目工作规范，按设计版本维护文档与交接 | AGENTS、项目交接、v0 起步的设计与进展文档；内置 better-notes 核对来源与表达 |
 
 ## How It Works
 
@@ -108,11 +109,11 @@ npx -y skills@latest add HOWILLMAKEIT/skills --skill '*' -g -a codex -y
 git clone https://github.com/HOWILLMAKEIT/skills.git && cd skills
 
 # Claude Code
-mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing ~/.claude/skills/
+mkdir -p ~/.claude/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing project-building ~/.claude/skills/
 # Codex
-mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing ~/.codex/skills/
+mkdir -p ~/.codex/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing project-building ~/.codex/skills/
 # DSH（已查证：dsh 自动读取 ~/.agents/skills，源码 dsh-skill-filesystem 默认 roots）
-mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing ~/.agents/skills/
+mkdir -p ~/.agents/skills && cp -R better-decision better-notes video-summary undress ai-paper-writing project-building ~/.agents/skills/
 
 # 不想复制多份？用软链（后续升级 = git pull 即生效）
 ln -s "$(pwd)/better-notes" ~/.agents/skills/better-notes
@@ -191,6 +192,20 @@ export BILIBILI_COOKIES_FROM_BROWSER=chrome   # 或 edge；safari 受 macOS 隐�
 3. **写作**：你要求后，读你的代码和草稿，按总结出的逻辑骨架写作，缺失的数据标“待确认”，并用脚本检查成稿与参考文件没有连续相同的片段。
 
 任务素材保存在对应项目中；技能包仅包含通用流程、公开来源链接和合成测试代码。详见 [SKILL.md](./ai-paper-writing/SKILL.md)。
+
+### project-building：按版本维护项目与交接
+
+先读取实际代码、配置、文档和必要的运行证据，明确本次目标与完成标准，再按任务推进设计、实现和验证，维护受影响的项目记录。适用于软件开发和研究项目。
+
+- **项目入口**：`AGENTS.md` 记录环境、命令与长期约束；`PROJECT_HANDOFF.md` 记录当前工作版本、状态、问题和下一步；`docs/README.md` 提供版本导航。
+- **版本文档**：从 `docs/v0/` 开始，每版以 `README.md`、`DESIGN.md`、`PROGRESS.md` 为核心，需要展开的探索、审查和专题分析放入 `guides/`。用户确认下一轮设计迭代后建立 `v1`、`v2`，保留旧版记录；日常修复和补充验证留在当前版本。
+- **写作与证据**：必须执行内置 `better-notes`，核对来源、语言准确性和写作风格，无需另行安装。实验原始结果、日志和权重保存在实际产物目录，文档链接证据。
+
+调用示例：
+
+> 使用 $project-building 读取当前项目，建立 AGENTS.md、项目交接和 docs/v0/ 文档，核实实际代码、环境与命令，沿用已有等价结构。
+
+只读查询只汇报，不自动写文档；发布、推送和停止作业仍按本次任务授权执行。安装和更多示例见[使用说明](./project-building/README.md)，完整规则见 [SKILL.md](./project-building/SKILL.md)。
 
 ## Project Structure
 

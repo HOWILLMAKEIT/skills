@@ -1,0 +1,4 @@
+interface:
+  display_name: "项目建设与文档维护"
+  short_description: "建立项目指南与文档入口，内置 better-notes 维护设计和交接记录"
+  default_prompt: "使用 $project-building 阅读当前项目，按实际情况建立或维护 AGENTS.md、docs 和项目交接；编写文档必须使用内置 better-notes，并推进本次工作。"

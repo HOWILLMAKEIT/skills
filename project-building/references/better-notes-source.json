@@ -1,0 +1,29 @@
+{
+  "source": "/Users/howill/Desktop/刷题-读论文/skills/better-notes",
+  "snapshot_date": "2026-10-27",
+  "entrypoint": "better-notes/SKILL.md",
+  "update_policy": "手动同步；同步后重新核对文件哈希、相对链接和 project-building 的集成规则。",
+  "files": {
+    "SKILL.md": "f9c35b255981ee7c553f1e105b350c80a19d6d152d415960ca7ec8bc94b8586f",
+    "evals/humanizer-cases.md": "719cf1cd9ea34d73a90d875bfd3589d50e8b03d87fa3f70bcfff3b4dd7cd9b43",
+    "evals/obsidian-widget-cases.md": "0bffdaccaed26d9950b612e1b2f87a55e4fc9de46bb85c617d1f3e2fb4fcf622",
+    "evals/paper-note-cases.md": "a7ae3e38030496f82330798c7150f7bed37b23404e2d986a9aaf409683d1922f",
+    "references/datacore/examples/clickable-timeline.jsx": "c7d60b7e3ee98170e0993a413c9211590b95f3f5d6f1209053337076c94fcca6",
+    "references/datacore/examples/compare-lanes.jsx": "14d52a705a3c22ed8985edbdec8993f815cbd11774169eb06d367313538488f6",
+    "references/datacore/examples/cross-note-summary.jsx": "7cd22f705ad394a2194409eebba25b05451d03598041c9f53aa9c74d60780e0a",
+    "references/datacore/examples/flow-stepper.jsx": "386265c29f9702941b9694b86f14afc6ab295c960e601cebf60b5bc2c573decb",
+    "references/datacore/examples/persisted-checklist.jsx": "0ecde9a88d25324ac0d10e58baaebdb7fb65790538b613ef08931f11d24e60c3",
+    "references/datacore/examples/persisted-tracker.jsx": "d287224bf4c7aa1d7a88fbc3aff685bf3767c73f1ab1d0bf96a6efe8c977c372",
+    "references/datacore/examples/runnable-demo.jsx": "feefa1168422df06ea1ffc976ec8c4d44e58eb3835a6dca3f6e2fe98307a1012",
+    "references/datacore/examples/slider-explorer.jsx": "05f5637c4b80cf0d6c4573e7d5eabf04ed28f7a375ca2fd34eddc92e757765b4",
+    "references/datacore/examples/toy-simulation.jsx": "2e4f422e9f1005dcc3ed0ee6cb5cd632b9605f82b1a17fddf20100f02d5c462a",
+    "references/datacore/smoke-test.cjs": "1557b8b9dde7afeecf1d96fb006f0d0c3966dee2499acda0e243f1e1368e05ae",
+    "references/humanizer.md": "ded52a63e5b3fbc0d8eff3bd62d90d93377e8a6041b88a7e28a47b986027d49f",
+    "references/language-precision.md": "e7380c319c5c8e5994901afea97ce3840997b50e6ebe2d9ecd0fb5f8543ced65",
+    "references/note-style.md": "92245b89ff767c495f645b4993ec3222acca1fb3d406ed01ee769ec6aa59e295",
+    "references/obsidian-datacore.md": "75834ab0f8b56e0820587613d7cdd757395aca4cde4ff6983229507f6a8a6783",
+    "references/paper-note-template.md": "d5b8929c9f2e8f3ce6d85312f93cbf8f40efaec2d43adac2226faebc4e19ad48",
+    "references/research-and-verification.md": "c18ca2b91f3109b5db2e9b4c6db99681164e6b2799ec6c2216c580fd60e80170",
+    "references/widget-design.md": "8ede4210c6baabeac6aca0cdf556bdcd64909e5549e912ba36d1b590f62ed42e"
+  }
+}
